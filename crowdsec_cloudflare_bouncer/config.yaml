@@ -1,0 +1,38 @@
+name: "CrowdSec Cloudflare Bouncer"
+description: "Setzt CrowdSec-Entscheidungen direkt bei Cloudflare durch (Workers + KV) - sperrt Angreifer am Cloudflare-Rand, auch hinter einem Tunnel"
+version: "0.1.0"
+url: "https://github.com/gregorwolf1973/crowdsec-cloudflare-bouncer-addon"
+slug: "crowdsec_cloudflare_bouncer"
+init: false
+arch:
+  - aarch64
+  - amd64
+  - armv7
+startup: services
+boot: auto
+options:
+  cloudflare_tokens: []
+  lapi_url: "http://424ccef4-crowdsec:8080"
+  lapi_key: ""
+  default_action: "ban"
+  captcha_enabled: false
+  captcha_mode: "managed"
+  update_frequency: "10s"
+  only_local_decisions: true
+  zones: []
+  log_level: "info"
+  remove_infrastructure: false
+schema:
+  cloudflare_tokens:
+    - password
+  lapi_url: str
+  lapi_key: password
+  default_action: list(ban|captcha|none)
+  captcha_enabled: bool
+  captcha_mode: list(managed|non-interactive|invisible)
+  update_frequency: str
+  only_local_decisions: bool
+  zones:
+    - str?
+  log_level: list(trace|debug|info|warning|error)
+  remove_infrastructure: bool

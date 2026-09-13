@@ -1,0 +1,34 @@
+configuration:
+  cloudflare_tokens:
+    name: Cloudflare-API-Tokens
+    description: "Ein Benutzer-API-Token je Cloudflare-Konto mit den in der Dokumentation genannten Rechten. Konten und Zonen werden bei jedem Start automatisch ermittelt."
+  lapi_url:
+    name: CrowdSec-LAPI-Adresse
+    description: "Adresse der lokalen CrowdSec-API, vom Addon-Netz aus erreichbar (Standard http://424ccef4-crowdsec:8080)."
+  lapi_key:
+    name: Bouncer-Schluessel
+    description: "Im CrowdSec-Addon erzeugen: docker exec addon_424ccef4_crowdsec cscli bouncers add cloudflare-bouncer"
+  default_action:
+    name: Standard-Aktion
+    description: "ban = Sperrseite, captcha = Turnstile-Challenge, none = nur beobachten."
+  captcha_enabled:
+    name: Captcha (Turnstile) aktivieren
+    description: "Richtet fuer jede Zone ein Turnstile-Widget ein; noetig fuer die Aktion captcha."
+  captcha_mode:
+    name: Turnstile-Modus
+    description: "managed (ueblich), non-interactive oder invisible."
+  update_frequency:
+    name: Abgleich-Intervall
+    description: "Wie oft Entscheidungen von der LAPI geholt werden, z. B. 10s."
+  only_local_decisions:
+    name: Nur eigene Entscheidungen
+    description: "An (empfohlen, zwingend im kostenlosen Plan): nur Entscheidungen der eigenen Engine und von cscli, nicht die Community-Blockliste."
+  zones:
+    name: Zonen (optional)
+    description: "Nur diese Zonen-IDs schuetzen. Leer = alle Zonen, die der Token sieht."
+  log_level:
+    name: Log-Level
+    description: "Ausfuehrlichkeit des Bouncer-Logs."
+  remove_infrastructure:
+    name: Cloudflare-Infrastruktur entfernen
+    description: "Einmal auf an stellen und starten: Worker, Routen und KV-Speicher werden bei Cloudflare geloescht, danach stoppt das Addon. Anschliessend wieder ausschalten."

@@ -1,0 +1,34 @@
+configuration:
+  cloudflare_tokens:
+    name: Cloudflare API tokens
+    description: "One user API token per Cloudflare account, with the permissions listed in the documentation. Accounts and zones are discovered on every start."
+  lapi_url:
+    name: CrowdSec LAPI address
+    description: "Address of the local CrowdSec API as reachable from the add-on network (default http://424ccef4-crowdsec:8080)."
+  lapi_key:
+    name: Bouncer key
+    description: "Create it in the CrowdSec add-on: docker exec addon_424ccef4_crowdsec cscli bouncers add cloudflare-bouncer"
+  default_action:
+    name: Default action
+    description: "ban = block page, captcha = Turnstile challenge, none = observe only."
+  captcha_enabled:
+    name: Enable captcha (Turnstile)
+    description: "Sets up a Turnstile widget per zone; required for the captcha action."
+  captcha_mode:
+    name: Turnstile mode
+    description: "managed (usual), non-interactive or invisible."
+  update_frequency:
+    name: Sync interval
+    description: "How often decisions are pulled from the LAPI, e.g. 10s."
+  only_local_decisions:
+    name: Only local decisions
+    description: "On (recommended, essential on the free plan): only decisions from your own engine and cscli, not the community blocklist."
+  zones:
+    name: Zones (optional)
+    description: "Protect only these zone IDs. Empty = every zone the token can see."
+  log_level:
+    name: Log level
+    description: "Verbosity of the bouncer log."
+  remove_infrastructure:
+    name: Remove Cloudflare infrastructure
+    description: "Switch on once and start: Worker, routes and KV namespace are deleted at Cloudflare, then the add-on stops. Switch it off again afterwards."
