@@ -26,7 +26,7 @@ if [ -z "${TOKENS}" ]; then
     exit 1
 fi
 if [ -z "${LAPI_KEY}" ]; then
-    bashio::log.fatal "lapi_key ist leer. Im CrowdSec-Addon einen Bouncer-Schluessel erzeugen: cscli bouncers add cloudflare"
+    bashio::log.fatal "lapi_key ist leer. Bouncer-Schluessel erzeugen: docker exec app_424ccef4_crowdsec cscli -c /config/.storage/crowdsec/config/config.yaml bouncers add cloudflare-bouncer"
     exit 1
 fi
 

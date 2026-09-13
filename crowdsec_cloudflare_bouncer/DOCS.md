@@ -14,11 +14,18 @@ attacker. The bouncer does.
 
 1. **The CrowdSec add-on** running, with its LAPI reachable from other add-ons
    (default `http://424ccef4-crowdsec:8080`).
-2. **A bouncer key** from that engine. Easiest with the SSH add-on:
+2. **A bouncer key** from that engine. Easiest with the SSH add-on
+   (protection mode off; use `sudo` if your SSH user is not root):
    ```
-   docker exec addon_424ccef4_crowdsec cscli bouncers add cloudflare-bouncer
+   docker exec app_424ccef4_crowdsec cscli -c /config/.storage/crowdsec/config/config.yaml bouncers add cloudflare-bouncer
    ```
    Copy the printed key into `lapi_key`.
+
+   Two details matter here. Recent Home Assistant versions name add-on
+   containers `app_<slug>`; older ones used `addon_<slug>`. And the `-c` is
+   not optional: without it `cscli` writes to a default database the running
+   engine never reads, the bouncer shows up in `cscli bouncers list`, and the
+   LAPI still answers every request with "API key not found".
 3. **A Cloudflare API token** (user token, not account-scoped) with exactly
    these permissions. [This link](https://dash.cloudflare.com/profile/api-tokens?permissionGroupKeys=%5B%7B%22key%22%3A%22account_settings%22%2C%22type%22%3A%22read%22%7D%2C%7B%22key%22%3A%22challenge_widgets%22%2C%22type%22%3A%22edit%22%7D%2C%7B%22key%22%3A%22user_details%22%2C%22type%22%3A%22read%22%7D%2C%7B%22key%22%3A%22workers_kv_storage%22%2C%22type%22%3A%22edit%22%7D%2C%7B%22key%22%3A%22workers_routes%22%2C%22type%22%3A%22edit%22%7D%2C%7B%22key%22%3A%22workers_scripts%22%2C%22type%22%3A%22edit%22%7D%2C%7B%22key%22%3A%22zone%22%2C%22type%22%3A%22read%22%7D%2C%7B%22key%22%3A%22dns%22%2C%22type%22%3A%22read%22%7D%2C%7B%22key%22%3A%22account_analytics%22%2C%22type%22%3A%22read%22%7D%5D&name=)
    opens the token form with them pre-selected:
@@ -83,7 +90,7 @@ share site itself, Home Assistant, Nextcloud and the rest.
 ## Testing
 
 ```
-docker exec addon_424ccef4_crowdsec cscli decisions add -i <your public IP> -d 5m
+docker exec app_424ccef4_crowdsec cscli -c /config/.storage/crowdsec/config/config.yaml decisions add -i <your public IP> -d 2m
 ```
 Within `update_frequency` the Worker starts answering your requests with the
-block page. `cscli decisions delete -i <ip>` lifts it.
+block page. The same command with `decisions delete -i <ip>` lifts it early.

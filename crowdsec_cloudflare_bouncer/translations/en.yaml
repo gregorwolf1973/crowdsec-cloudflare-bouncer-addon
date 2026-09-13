@@ -7,7 +7,7 @@ configuration:
     description: "Address of the local CrowdSec API as reachable from the add-on network (default http://424ccef4-crowdsec:8080)."
   lapi_key:
     name: Bouncer key
-    description: "Create it in the CrowdSec add-on: docker exec addon_424ccef4_crowdsec cscli bouncers add cloudflare-bouncer"
+    description: "Create it in the CrowdSec add-on: docker exec app_424ccef4_crowdsec cscli -c /config/.storage/crowdsec/config/config.yaml bouncers add cloudflare-bouncer. Without -c the key lands in a database CrowdSec never reads."
   default_action:
     name: Default action
     description: "ban = block page, captcha = Turnstile challenge, none = observe only."

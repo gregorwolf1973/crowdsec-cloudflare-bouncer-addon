@@ -24,8 +24,7 @@ RUN set -e; \
     BIN="$(find /tmp/bouncer -type f -name crowdsec-cloudflare-worker-bouncer | head -n 1)"; \
     test -n "${BIN}"; \
     install -m 0755 "${BIN}" /usr/local/bin/crowdsec-cloudflare-worker-bouncer; \
-    rm -rf /tmp/bouncer /tmp/bouncer.tgz; \
-    /usr/local/bin/crowdsec-cloudflare-worker-bouncer -V || true
+    rm -rf /tmp/bouncer /tmp/bouncer.tgz
 
 COPY run.sh /run.sh
 COPY merge_config.py /merge_config.py
