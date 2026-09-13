@@ -55,7 +55,7 @@ attacker. The bouncer does.
 | `captcha_enabled` / `captcha_mode` | Enable Turnstile challenges; `managed` is the usual choice. |
 | `update_frequency` | How often decisions are pulled from the engine (`10s`). |
 | `only_local_decisions` | On (recommended on the free plan): only decisions from *your* engine and `cscli`, not the community blocklist. The community list has tens of thousands of addresses and would exhaust the free KV write quota on the first sync. |
-| `zones` | Optional list of zone IDs. Empty = every zone the token can see. |
+| `zones` | Optional list of zone IDs or names. Empty = every active zone the token can see. Each protected zone gets the route `*<zone>/*`, so every request to every hostname in it passes the Worker. Zones behind a Cloudflare tunnel, which only have CNAME records, are included too. |
 | `remove_infrastructure` | Set to `true` once and start the add-on: it removes the Worker, routes and KV namespace from Cloudflare, then stops. Switch it back off afterwards. |
 
 ## After the first start: set the routes to Fail Open
@@ -73,6 +73,8 @@ so do it once by hand:
 The add-on reminds you of this in its log on every start.
 
 ## Free plan
+
+The route covers the whole zone. On the free plan every request to Home Assistant, Nextcloud and the share site counts against the Worker quota below. With Fail open set, requests beyond the quota still reach your services, just without the block check.
 
 Works, with limits: 1,000 KV writes per day and 100,000 Worker requests per
 day (1,000 per minute). Keep `only_local_decisions` on, set Fail Open, and

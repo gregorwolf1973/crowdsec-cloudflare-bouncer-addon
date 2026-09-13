@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.2
+
+- **Fix: Zonen hinter einem Cloudflare-Tunnel wurden nicht geschuetzt.** Der Generator des Bouncers (`-g`) ueberspringt jede Zone ohne A- oder AAAA-Eintrag. Bei Tunnel-Domains zeigen alle Namen per CNAME auf den Tunnel, der Start brach dann mit "Keine Zone gefunden" ab. Das Addon fragt die aktiven Zonen jetzt zusaetzlich direkt bei der Cloudflare-API ab und legt fuer jede die Route `*<zone>/*` an, genau wie der Generator. Ist die API nicht erreichbar, bleibt es bei den Zonen des Generators.
+- Die erzeugte Konfiguration bleibt die Grundlage: Neue Schluessel der Bouncer-Version 0.0.18 wie `worker`, `decisions_sync_worker`, `daemon` und `log_mode` gingen vorher beim Zusammenfuehren verloren.
+- `default_action: none` erzeugte eine ungueltige Konfiguration. Es bedeutet jetzt Beobachten ohne Sperren (`log_only`).
+- Die Option `zones` akzeptiert Zonen-IDs und Zonennamen.
+
 ## 0.1.1
 
 - Doku und Fehlermeldungen korrigiert: Der Bouncer-Schluessel muss mit `cscli -c /config/.storage/crowdsec/config/config.yaml` erzeugt werden. Ohne `-c` schreibt cscli in eine Standard-Datenbank, die der laufende CrowdSec-Dienst nicht liest; der Bouncer steht dann in der Liste, die LAPI antwortet aber mit "API key not found".
