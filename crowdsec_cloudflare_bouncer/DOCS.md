@@ -45,6 +45,8 @@ attacker. The bouncer does.
    Put the token into `cloudflare_tokens` (one entry; more than one only if
    you have several Cloudflare accounts).
 
+4. **Workers Analytics Engine enabled** in the Cloudflare account: Dashboard, Storage & databases, Analytics Engine, Enable. The Worker writes metrics there; without it the first start ends with "You need to enable Analytics Engine (10089)". After enabling, Cloudflare can take about two minutes before a start succeeds. You do not need to create a dataset yourself.
+
 ## Options
 
 | Option | Meaning |
@@ -96,3 +98,5 @@ docker exec app_424ccef4_crowdsec cscli -c /config/.storage/crowdsec/config/conf
 ```
 Within `update_frequency` the Worker starts answering your requests with the
 block page. The same command with `decisions delete -i <ip>` lifts it early.
+
+Decisions live in Workers KV, which is eventually consistent: expect roughly one minute until a new ban takes effect at the edge, and about as long until a lifted ban stops blocking.
