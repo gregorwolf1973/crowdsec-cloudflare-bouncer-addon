@@ -97,12 +97,16 @@ for a few seconds while the host boots. Since 0.1.3 the add-on therefore:
 
 ## Free plan
 
-The route covers the whole zone. On the free plan every request to Home Assistant, Nextcloud and the share site counts against the Worker quota below. With Fail open set, requests beyond the quota still reach your services, just without the block check.
+The route covers the whole zone. On the free plan every request to Home Assistant, Nextcloud and the share site counts against the Worker quota below. Because the routes fail open, requests beyond the quota still reach your services, just without the block check.
 
 Works, with limits: 1,000 KV writes per day and 100,000 Worker requests per
-day (1,000 per minute). Keep `only_local_decisions` on, set Fail Open, and
-expect the first sync of a large list to be truncated to about a thousand
-addresses. A paid Workers plan removes the ceiling.
+day (1,000 per minute). Keep `only_local_decisions` on and expect the first
+sync of a large list to be truncated to about a thousand addresses. A paid
+Workers plan removes the ceiling.
+
+Nothing to switch by hand: since 0.1.4 the add-on sets the routes to fail open
+itself after every start (option `fail_open`, default on - see the section
+above).
 
 ## How it fits with Simple NAS
 

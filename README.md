@@ -17,7 +17,7 @@ Cloudflare.
 
 [![Add repository](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2Fgregorwolf1973%2Fcrowdsec-cloudflare-bouncer-addon)
 
-Settings → Add-ons → Add-on Store → ⋮ → Repositories → add
+Settings → Apps → Install app → ⋮ → Repositories → add
 `https://github.com/gregorwolf1973/crowdsec-cloudflare-bouncer-addon`.
 
 Then read the add-on's **Documentation** tab: you need a Cloudflare API token
@@ -29,5 +29,7 @@ are set to *Fail open* automatically (option `fail_open`, since 0.1.4).
 
 - `crowdsec_cloudflare_bouncer/` – the add-on (Dockerfile downloads the pinned
   upstream release for the target architecture; `run.sh` discovers your zones
-  from the token and merges the add-on options into the bouncer config)
+  from the token and merges the add-on options into the bouncer config;
+  `merge_config.py` does that merge, `fail_open.py` switches the bouncer's
+  worker routes to *Fail open* after every start)
 - `tests/` – `python -m unittest discover -s tests`
