@@ -1,5 +1,7 @@
 # CrowdSec Cloudflare Bouncer
 
+[!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://buymeacoffee.com/gregorwolf1973)
+
 Enforces CrowdSec decisions at Cloudflare's edge. The add-on runs the official
 `crowdsec-cloudflare-worker-bouncer`: it deploys a small Cloudflare Worker in
 front of your zones, keeps a KV store in sync with the decisions of your
@@ -58,6 +60,7 @@ attacker. The bouncer does.
 | `update_frequency` | How often decisions are pulled from the engine (`10s`). |
 | `only_local_decisions` | On (recommended on the free plan): only decisions from *your* engine and `cscli`, not the community blocklist. The community list has tens of thousands of addresses and would exhaust the free KV write quota on the first sync. |
 | `zones` | Optional list of zone IDs or names. Empty = every active zone the token can see. Each protected zone gets the route `*<zone>/*`, so every request to every hostname in it passes the Worker. Zones behind a Cloudflare tunnel, which only have CNAME records, are included too. |
+| `log_level` | Verbosity of the bouncer log: `trace`, `debug`, `info` (default), `warning` or `error`. |
 | `remove_infrastructure` | Set to `true` once and start the add-on: it removes the Worker, routes and KV namespace from Cloudflare, then stops. Switch it back off afterwards. |
 | `fail_open` | Default `true`: after every start the bouncer's routes are set to fail open (see below). |
 

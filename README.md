@@ -1,5 +1,7 @@
 # CrowdSec Cloudflare Bouncer – Home Assistant Add-on
 
+[!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://buymeacoffee.com/gregorwolf1973)
+
 Packages the official [crowdsec-cloudflare-worker-bouncer](https://github.com/crowdsecurity/cs-cloudflare-worker-bouncer)
 as a Home Assistant add-on. It deploys a Cloudflare Worker in front of your
 zones and keeps it in sync with the decisions of your CrowdSec Security Engine,
@@ -19,8 +21,9 @@ Settings → Add-ons → Add-on Store → ⋮ → Repositories → add
 `https://github.com/gregorwolf1973/crowdsec-cloudflare-bouncer-addon`.
 
 Then read the add-on's **Documentation** tab: you need a Cloudflare API token
-with nine specific permissions, a bouncer key from the CrowdSec add-on, and one
-manual step at Cloudflare afterwards (setting the worker routes to *Fail open*).
+with nine specific permissions, a bouncer key from the CrowdSec add-on, and
+Workers Analytics Engine enabled in the Cloudflare account. The worker routes
+are set to *Fail open* automatically (option `fail_open`, since 0.1.4).
 
 ## Files
 

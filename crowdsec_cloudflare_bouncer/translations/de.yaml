@@ -25,7 +25,7 @@ configuration:
     description: "An (empfohlen, zwingend im kostenlosen Plan): nur Entscheidungen der eigenen Engine und von cscli, nicht die Community-Blockliste."
   zones:
     name: Zonen (optional)
-    description: "Nur diese Zonen-IDs schuetzen. Leer = alle Zonen, die der Token sieht."
+    description: "Nur diese Zonen-IDs oder Zonennamen schuetzen. Leer = alle Zonen, die der Token sieht."
   log_level:
     name: Log-Level
     description: "Ausfuehrlichkeit des Bouncer-Logs."

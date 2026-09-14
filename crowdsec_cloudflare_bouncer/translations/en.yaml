@@ -25,7 +25,7 @@ configuration:
     description: "On (recommended, essential on the free plan): only decisions from your own engine and cscli, not the community blocklist."
   zones:
     name: Zones (optional)
-    description: "Protect only these zone IDs. Empty = every zone the token can see."
+    description: "Protect only these zone IDs or zone names. Empty = every zone the token can see."
   log_level:
     name: Log level
     description: "Verbosity of the bouncer log."
