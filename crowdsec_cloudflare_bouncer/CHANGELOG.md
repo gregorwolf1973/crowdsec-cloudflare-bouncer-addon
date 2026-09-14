@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.3
+
+- **Fix: Nach einem Neustart des Hosts startete das Addon nicht ("Starten der App beim Systemstart fehlgeschlagen") und Cloudflare stand ohne Schutz da.** Beim Hochfahren starten die Addons gleichzeitig; der Name des CrowdSec-Addons (`424ccef4-crowdsec`) war noch nicht aufloesbar. Der Bouncer richtete trotzdem Worker und KV-Speicher ein, scheiterte am ersten Abruf der Entscheidungen, raeumte beim Beenden alles bei Cloudflare wieder ab und beendete sich mit Code 1.
+- Das Addon wartet jetzt vor dem Einrichten, bis die CrowdSec-LAPI mit `lapi_key` antwortet (Pruefung alle 5 s, Hinweis im Log alle 30 s). Ein abgelehnter Schluessel bricht sofort mit einer klaren Meldung ab.
+- Beendet sich der Bouncer spaeter (etwa bei einem Neustart oder Update des CrowdSec-Addons), startet das Addon ihn neu, sobald die LAPI wieder antwortet - mit wachsendem Abstand bis 5 Minuten. Vorher war das Addon dann aus und der Schutz weg.
+- Die Abfrage der Cloudflare-Konten wird bis zu sechsmal wiederholt, falls Netz oder DNS kurz nach dem Hochfahren noch nicht stehen.
+
 ## 0.1.2
 
 - **Fix: Zonen hinter einem Cloudflare-Tunnel wurden nicht geschuetzt.** Der Generator des Bouncers (`-g`) ueberspringt jede Zone ohne A- oder AAAA-Eintrag. Bei Tunnel-Domains zeigen alle Namen per CNAME auf den Tunnel, der Start brach dann mit "Keine Zone gefunden" ab. Das Addon fragt die aktiven Zonen jetzt zusaetzlich direkt bei der Cloudflare-API ab und legt fuer jede die Route `*<zone>/*` an, genau wie der Generator. Ist die API nicht erreichbar, bleibt es bei den Zonen des Generators.

@@ -74,6 +74,18 @@ so do it once by hand:
 
 The add-on reminds you of this in its log on every start.
 
+## Host reboots and CrowdSec restarts
+
+The bouncer tears its Worker and KV namespace down whenever it exits with an
+error, and it errors if the CrowdSec LAPI cannot be reached - which is normal
+for a few seconds while the host boots. Since 0.1.3 the add-on therefore:
+
+- waits until the LAPI answers with `lapi_key` before it sets anything up at
+  Cloudflare (the log says "Warte auf CrowdSec-LAPI ..." meanwhile);
+- stops with a clear message if the LAPI rejects the key;
+- restarts the bouncer when it exits later, e.g. while the CrowdSec add-on
+  restarts or updates, once the LAPI answers again (backing off up to 5 min).
+
 ## Free plan
 
 The route covers the whole zone. On the free plan every request to Home Assistant, Nextcloud and the share site counts against the Worker quota below. With Fail open set, requests beyond the quota still reach your services, just without the block check.
