@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.4
+
+- **Routen stehen nach jedem Start automatisch auf "Fail open".** Der Bouncer loescht seine Routen bei jedem Start und legt sie neu an - Cloudflare-Standard ist "Fail closed". Eine von Hand umgestellte Route war nach jedem Host-Neustart, Update oder Neustart wieder geschlossen; faellt dann der Worker aus oder ist das Tageslimit erreicht, sehen Besucher nur eine Cloudflare-Fehlerseite.
+- Das Addon wartet nach jedem Start, bis die Routen des Bouncers existieren, und setzt `request_limit_fail_open` ueber die Zonen-Routen-API (in der API-Doku nicht aufgefuehrt, von Cloudflare aber geliefert und angenommen - derselbe Schalter wie im Dashboard). Das Ergebnis wird zurueckgelesen und im Log gemeldet. Fremde Routen bleiben unangetastet.
+- Neue Option `fail_open` (Standard an). Die Log-Erinnerung, die Routen von Hand umzustellen, entfaellt.
+
 ## 0.1.3
 
 - **Fix: Nach einem Neustart des Hosts startete das Addon nicht ("Starten der App beim Systemstart fehlgeschlagen") und Cloudflare stand ohne Schutz da.** Beim Hochfahren starten die Addons gleichzeitig; der Name des CrowdSec-Addons (`424ccef4-crowdsec`) war noch nicht aufloesbar. Der Bouncer richtete trotzdem Worker und KV-Speicher ein, scheiterte am ersten Abruf der Entscheidungen, raeumte beim Beenden alles bei Cloudflare wieder ab und beendete sich mit Code 1.

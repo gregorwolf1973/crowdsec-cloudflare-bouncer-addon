@@ -59,20 +59,26 @@ attacker. The bouncer does.
 | `only_local_decisions` | On (recommended on the free plan): only decisions from *your* engine and `cscli`, not the community blocklist. The community list has tens of thousands of addresses and would exhaust the free KV write quota on the first sync. |
 | `zones` | Optional list of zone IDs or names. Empty = every active zone the token can see. Each protected zone gets the route `*<zone>/*`, so every request to every hostname in it passes the Worker. Zones behind a Cloudflare tunnel, which only have CNAME records, are included too. |
 | `remove_infrastructure` | Set to `true` once and start the add-on: it removes the Worker, routes and KV namespace from Cloudflare, then stops. Switch it back off afterwards. |
+| `fail_open` | Default `true`: after every start the bouncer's routes are set to fail open (see below). |
 
-## After the first start: set the routes to Fail Open
+## Routes fail open (automatic since 0.1.4)
 
 Cloudflare creates worker routes in **Fail Closed** mode. If the Worker ever
 errors - including when a free-plan quota is exhausted - every visitor gets a
-Cloudflare error page instead of your site. There is no API for this setting,
-so do it once by hand:
+Cloudflare error page instead of your site. The bouncer deletes and recreates
+its routes on every start, so a route switched by hand is closed again after
+each host reboot, update or restart.
 
-1. Cloudflare dashboard → your zone → **Workers Routes** (or Workers & Pages →
-   the `crowdsec-...` worker → Settings → Domains & Routes).
-2. Open each route the bouncer created.
-3. **Request limit failure mode** → **Fail open**.
+With `fail_open: true` (default) the add-on waits for the bouncer's routes
+after every start and sets them to fail open itself. The public API docs list
+only `pattern` and `script` for a route, but the zone route endpoints return
+and accept `request_limit_fail_open` - the same switch as in the dashboard.
+The token needs no extra permission: the bouncer already edits these routes.
+The log shows "Route ... auf 'Fail open' gestellt"; if Cloudflare ever stops
+accepting the field it says so and names the manual way:
 
-The add-on reminds you of this in its log on every start.
+Cloudflare dashboard → Workers & Pages → the `crowdsec-...` worker → Domains →
+route → Edit → **Fail open (proceed)**.
 
 ## Host reboots and CrowdSec restarts
 

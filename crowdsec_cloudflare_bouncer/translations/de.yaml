@@ -32,3 +32,6 @@ configuration:
   remove_infrastructure:
     name: Cloudflare-Infrastruktur entfernen
     description: "Einmal auf an stellen und starten: Worker, Routen und KV-Speicher werden bei Cloudflare geloescht, danach stoppt das Addon. Anschliessend wieder ausschalten."
+  fail_open:
+    name: Routen auf 'Fail open' stellen
+    description: "An (empfohlen): Nach jedem Start stellt das Addon die Routen des Bouncers auf 'Oeffnen bei Fehler'. Faellt der Worker aus oder ist das Tageslimit erreicht, bleiben die Dienste erreichbar - nur ohne Sperrpruefung. Aus: Besucher sehen dann eine Cloudflare-Fehlerseite."

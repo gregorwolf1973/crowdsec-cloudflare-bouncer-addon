@@ -28,6 +28,7 @@ RUN set -e; \
 
 COPY run.sh /run.sh
 COPY merge_config.py /merge_config.py
+COPY fail_open.py /fail_open.py
 RUN chmod +x /run.sh
 
 CMD ["/run.sh"]

@@ -98,7 +98,12 @@ python3 /merge_config.py "${GENERATED}" "${CONFIG}"
 chmod 600 "${CONFIG}"
 
 bashio::log.info "LAPI: ${LAPI_URL} · Aktion: ${DEFAULT_ACTION} · Captcha: ${CAPTCHA_ENABLED} · Abgleich alle ${UPDATE_FREQUENCY}"
-bashio::log.warning "Nach dem ersten Start bei Cloudflare unter Workers & Pages fuer jede Route den Fehlermodus auf 'Fail open' stellen (siehe Dokumentation)."
+if ! bashio::config.false 'fail_open'; then
+    FAIL_OPEN=true                      # also when the option is missing (installs from before 0.1.4)
+else
+    FAIL_OPEN=false
+    bashio::log.warning "fail_open ist aus: Die Routen bleiben 'Fail closed'. Faellt der Worker aus oder ist das Tageslimit erreicht, sehen Besucher eine Cloudflare-Fehlerseite."
+fi
 
 # ── run, and bring the bouncer back if it dies ───────────────────────────────
 # A restarted or updated CrowdSec add-on makes the bouncer exit the same way
@@ -121,6 +126,11 @@ while true; do
     started=$(date +%s)
     "${BIN}" -c "${CONFIG}" &
     child=$!
+    # The bouncer recreates its routes on every start, "fail closed" by
+    # default. Switch them open again once they exist (runs alongside).
+    if [ "${FAIL_OPEN}" = "true" ]; then
+        python3 /fail_open.py "${CONFIG}" 240 &
+    fi
     set +e
     wait "${child}"
     rc=$?

@@ -32,3 +32,6 @@ configuration:
   remove_infrastructure:
     name: Remove Cloudflare infrastructure
     description: "Switch on once and start: Worker, routes and KV namespace are deleted at Cloudflare, then the add-on stops. Switch it off again afterwards."
+  fail_open:
+    name: Set routes to fail open
+    description: "On (recommended): after every start the add-on switches the bouncer's routes to fail open. If the Worker fails or the daily quota is used up, your services stay reachable - just without the block check. Off: visitors get a Cloudflare error page instead."
