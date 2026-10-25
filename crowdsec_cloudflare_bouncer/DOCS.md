@@ -1,6 +1,6 @@
 # CrowdSec Cloudflare Bouncer
 
-[!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://buymeacoffee.com/gregorwolf1973)
+[!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://buymeacoffee.com/gregorwolf1973) [![Donate using Liberapay](https://liberapay.com/assets/widgets/donate.svg)](https://liberapay.com/Gregor_Wolf/donate)
 
 Enforces CrowdSec decisions at Cloudflare's edge. The add-on runs the official
 `crowdsec-cloudflare-worker-bouncer`: it deploys a small Cloudflare Worker in
