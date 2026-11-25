@@ -1,6 +1,7 @@
 name: "CrowdSec Cloudflare Bouncer"
-description: "Setzt CrowdSec-Entscheidungen direkt bei Cloudflare durch (Workers + KV) - sperrt Angreifer am Cloudflare-Rand, auch hinter einem Tunnel"
-version: "0.1.4"
+description: "Enforces CrowdSec decisions at Cloudflare (Workers + KV) - blocks attackers at the Cloudflare edge, even behind a tunnel"
+version: "0.1.5"
+image: ghcr.io/gregorwolf1973/{arch}-addon-crowdsec_cloudflare_bouncer
 url: "https://github.com/gregorwolf1973/crowdsec-cloudflare-bouncer-addon"
 slug: "crowdsec_cloudflare_bouncer"
 init: false

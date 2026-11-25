@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.5
+- Prebuilt images from GitHub Container Registry: installs and updates no
+  longer build locally.
+
 ## 0.1.4
 
 - **Routen stehen nach jedem Start automatisch auf "Fail open".** Der Bouncer loescht seine Routen bei jedem Start und legt sie neu an - Cloudflare-Standard ist "Fail closed". Eine von Hand umgestellte Route war nach jedem Host-Neustart, Update oder Neustart wieder geschlossen; faellt dann der Worker aus oder ist das Tageslimit erreicht, sehen Besucher nur eine Cloudflare-Fehlerseite.

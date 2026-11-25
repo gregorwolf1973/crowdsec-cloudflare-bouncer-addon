@@ -1,0 +1,13 @@
+name: Build
+on:
+  push:
+    branches: [master]
+    paths: ["crowdsec_cloudflare_bouncer/**"]
+  workflow_dispatch:
+jobs:
+  crowdsec_cloudflare_bouncer:
+    permissions: {contents: read, packages: write}
+    uses: gregorwolf1973/ha-addons/.github/workflows/build-addon.yaml@main
+    with:
+      addon: "crowdsec_cloudflare_bouncer"
+      image: "ghcr.io/gregorwolf1973/{arch}-addon-crowdsec_cloudflare_bouncer"
